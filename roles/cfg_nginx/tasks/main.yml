@@ -1,0 +1,66 @@
+---
+# tasks file for cfg_nginx
+
+- name: Install Nginx 
+  apt:
+    name: nginx
+    state: present
+  become: true
+
+
+- name: ensure /etc/nginx/nginx.conf is present
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  become: true
+
+
+- name: Deploy nginx config.
+  block:
+    - name: Copy cofig to sites-available
+      template:
+        src: "{{ nginx_type }}.cfg"
+        dest: /etc/nginx/sites-available/{{ nginx_url }}
+        owner: root
+        group: root
+        mode: 0644
+      become: true
+
+    - name: Create symlink
+      file:
+        src: /etc/nginx/sites-available/{{ nginx_url }}
+        dest: /etc/nginx/sites-enabled/{{ nginx_url }}
+        state: link
+      become: true
+
+- name: Install certbot package
+  apt:
+   name: certbot
+   state: present
+
+
+- name: Install certbot-nginx plugin
+  apt:
+   name: python3-certbot-nginx
+   state: present
+
+- name: Check if certbot exists.
+  stat:
+    path: /etc/letsencrypt/live/'{{ certbot_nginx_cert_name | default(domain_name, true) }}'/cert.pem
+  register: letsencrypt_cert
+
+
+
+- name: Generate new cert if not exist
+  shell: >
+    certbot --nginx --email '{{ certbot_email }}' 
+    --agree-tos -d '{{ domain_name }}'
+  when: not letsencrypt_cert.stat.exists
+ 
+- name: enable Nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: true
+

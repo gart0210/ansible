@@ -1,0 +1,17 @@
+---
+# defaults file for cfg_nginx
+
+nginx_url: domain.ru
+
+nginx_type: proxy
+
+nginx_bin: /usr/local/sbin/nginx
+
+nginx_user: www-data
+
+nginx_additional_urls: domain.ru
+
+nginx_destination: domain.ru
+certbot_nginx_cert_name: mycert2
+
+domain_name: test2.domain.ru

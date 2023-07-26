@@ -1,0 +1,15 @@
+---
+# vars file for cfg_nginx
+certbot_email: test@domain.ru
+
+nginx_ports:
+  - port: "{{ nginx_listen_port }}"
+    proto: tcp
+
+nginx_listen_port: 80
+
+
+
+
+
+
