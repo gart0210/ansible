@@ -1,6 +1,8 @@
 ---
 servername: "test.domain.ru"
-nginx_url: "test.domain.ru"
+nginx_url: 
+ - "test.domain.ru"
+ - "test1.domain.ru"
 documentroot: "/var/www/test.domain.ru"
 certbot_nginx_cert_name: mycert
 domain_name: test.domain.ru

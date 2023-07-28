@@ -1,7 +1,9 @@
 ---
 # defaults file for cfg_nginx
 
-nginx_url: domain.ru
+nginx_url: 
+ - domain.ru
+ - 2dom.ru
 
 nginx_type: proxy
 

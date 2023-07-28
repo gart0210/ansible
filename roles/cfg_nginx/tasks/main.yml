@@ -21,18 +21,20 @@
     - name: Copy cofig to sites-available
       template:
         src: "{{ nginx_type }}.cfg"
-        dest: /etc/nginx/sites-available/{{ nginx_url }}
+        dest: /etc/nginx/sites-available/{{ item }}
         owner: root
         group: root
         mode: 0644
       become: true
+      loop: "{{ nginx_url }}"
 
     - name: Create symlink
       file:
-        src: /etc/nginx/sites-available/{{ nginx_url }}
-        dest: /etc/nginx/sites-enabled/{{ nginx_url }}
+        src: /etc/nginx/sites-available/{{ item }}
+        dest: /etc/nginx/sites-enabled/{{ item }}
         state: link
       become: true
+      loop: "{{ nginx_url }}"
 
 - name: Install certbot package
   apt:
@@ -47,7 +49,8 @@
 
 - name: Check if certbot exists.
   stat:
-    path: /etc/letsencrypt/live/'{{ certbot_nginx_cert_name | default(domain_name, true) }}'/cert.pem
+    path: /etc/letsencrypt/live/'{{ certbot_nginx_cert_name | default(item, true) }}'/cert.pem
+  loop: "{{ nginx_url }}"
   register: letsencrypt_cert
 
 
@@ -55,7 +58,8 @@
 - name: Generate new cert if not exist
   shell: >
     certbot --nginx --email '{{ certbot_email }}' 
-    --agree-tos -d '{{ domain_name }}'
+    --agree-tos -d '{{ item }}'
+  loop: "{{ nginx_url }}"
   when: not letsencrypt_cert.stat.exists
  
 - name: enable Nginx
