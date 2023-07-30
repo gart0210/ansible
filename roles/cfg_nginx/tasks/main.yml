@@ -54,7 +54,6 @@
   register: letsencrypt_cert
 
 
-
 - name: Generate new cert if not exist
   shell: >
     certbot --nginx --email '{{ certbot_email }}' 
@@ -67,4 +66,5 @@
     name: nginx
     state: restarted
     enabled: true
+
 

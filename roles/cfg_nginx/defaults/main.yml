@@ -1,19 +1,19 @@
 ---
 # defaults file for cfg_nginx
 
-nginx_url: 
- - domain.ru
- - 2dom.ru
+#nginx_url: 
+# - domain.ru
+# - 2dom.ru
 
-nginx_type: proxy
+#nginx_type: proxy
 
-nginx_bin: /usr/local/sbin/nginx
+#nginx_bin: /usr/local/sbin/nginx
+#
+#nginx_user: www-data
 
-nginx_user: www-data
+#nginx_additional_urls: domain.ru
 
-nginx_additional_urls: domain.ru
+#nginx_destination: domain.ru
+#certbot_nginx_cert_name: mycert2
 
-nginx_destination: domain.ru
-certbot_nginx_cert_name: mycert2
-
-domain_name: test2.domain.ru
+#domain_name: test2.domain.ru
