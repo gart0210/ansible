@@ -3,3 +3,5 @@
   become: true
   roles:
     - cfg_nginx
+- vars_files:
+    - "group_vars/ {{ env }}.yml"

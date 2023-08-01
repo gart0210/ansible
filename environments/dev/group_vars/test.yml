@@ -1,0 +1,15 @@
+---
+env: dev
+
+
+nginx_url: 
+ - "test.domain.ru"
+ - "test1.domain.ru"
+
+certbot_nginx_cert_name: mycert
+
+ansible_python_interpreter: /usr/bin/python3
+
+nginx_user: www-data
+
+nginx_type: proxy
